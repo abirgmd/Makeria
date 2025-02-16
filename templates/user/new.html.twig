@@ -1,0 +1,41 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}Créer un Nouvel Utilisateur{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Créer un Nouvel Utilisateur</h4>
+        </div>
+        <div class="card-body">
+            {{ form_start(form, {'attr': {'class': 'form-styled'}}) }}
+
+            <div class="form-container">
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.vars.id }}">
+                            <strong>{{ field.vars.label|default(field.vars.name|capitalize) }}</strong>
+                        </label>
+
+                        {{ form_widget(field, {'attr': {'class': 'form-control custom-input'}}) }}
+
+                        {% if field.vars.errors|length > 0 %}
+                            <div class="alert-card">
+                                {% for error in field.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-actions text-end">
+                <button type="submit" class="btn save-btn">{{ button_label|default('Enregistrer') }}</button>
+                <a href="{{ path('app_user_index') }}" class="btn back-btn">Retour à la liste</a>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
