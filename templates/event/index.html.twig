@@ -1,0 +1,55 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}Event Index{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Event Index</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <tr>
+                            <th>ID</th>
+                            <th>Date Début</th>
+                            <th>Date Fin</th>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>Image 1</th>
+                            <th>Image 2</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in events %}
+                            <tr>
+                                <td>{{ event.id }}</td>
+                                <td>{{ event.dateDebut ? event.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ event.dateFin ? event.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ event.titreevents }}</td>
+                                <td>{{ event.descriptionevents }}</td>
+                                <td>{{ event.image1events }}</td>
+                                <td>{{ event.image2events }}</td>
+                                <td>
+                                    <a href="{{ path('app_event_edit', {'id': event.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{{ path('app_event_show', {'id': event.id}) }}" class="btn btn-sm btn-primary">Show</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="8" class="text-center">No records found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <a href="{{ path('app_event_new') }}" class="btn btn-success">
+                    <i class="tim-icons icon-simple-add"></i> Create New Event
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}Commentaires Index{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Commentaires Index</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom Commentaire</th>
+                            <th>Texte Commentaire</th>
+                            <th>Date Commentaire</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for commentaire in commentaires %}
+                            <tr>
+                                <td>{{ commentaire.id }}</td>
+                                <td>{{ commentaire.nomcomment }}</td>
+                                <td>{{ commentaire.textCommentaire }}</td>
+                                <td>{{ commentaire.timecomment ? commentaire.timecomment|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>
+                                    <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}" class="btn btn-sm btn-primary">Show</a>
+                                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">No records found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <a href="{{ path('app_commentaire_new') }}" class="btn btn-success">
+                    <i class="tim-icons icon-simple-add"></i> Create New Comment
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% block stylesheets %}
+<style>
+    .alert {
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+    .alert-danger {
+        background-color:rgb(242, 79, 217);
+        border: 1px solid #f5c6cb;
+    }
+    .alert ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    .alert li {
+        margin: 5px 0;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="form-container">
+    {# Vérifier si des erreurs sont présentes dans le formulaire #}
+    {% if form.vars.errors|length > 0 %}
+        <div class="alert alert-danger">
+            <div class="alert-title">Des erreurs sont survenues :</div>
+            <ul>
+                {# Affichage des erreurs globales du formulaire #}
+                {% for error in form.errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {{ form_start(form) }}
+        {# Afficher les erreurs pour chaque champ si elles existent #}
+        {% for field in form %}
+            <div class="form-group">
+                {{ form_label(field) }}
+                {{ form_widget(field) }}
+                {# Afficher les erreurs spécifiques à chaque champ #}
+                {% if field.vars.errors|length > 0 %}
+                    <div class="alert alert-danger">
+                        <ul>
+                            {% for error in field.vars.errors %}
+                                <li>{{ error.message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
