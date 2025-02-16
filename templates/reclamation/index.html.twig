@@ -1,0 +1,69 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}Reclamation Index{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Reclamation Index</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <tr>
+                            <th>ID</th>
+                            <th>Date Rec</th>
+                            <th>Image 1</th>
+                            <th>Image 2</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Article ID</th>
+                            <th>User ID</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reclamation in reclamations %}
+                            <tr>
+                                <td>{{ reclamation.id }}</td>
+                                <td>{{ reclamation.DateRec ? reclamation.DateRec|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>
+                                    {% if reclamation.ImagesReclamation1 %}
+                                        <img src="{{ reclamation.ImagesReclamation1 }}" alt="Image 1" class="img-thumbnail" style="max-width: 100px;">
+                                    {% else %}
+                                        No image
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if reclamation.ImagesReclamation2 %}
+                                        <img src="{{ reclamation.ImagesReclamation2 }}" alt="Image 2" class="img-thumbnail" style="max-width: 100px;">
+                                    {% else %}
+                                        No image
+                                    {% endif %}
+                                </td>
+                                <td>{{ reclamation.DescriptionRec }}</td>
+                                <td>{{ reclamation.StatRec }}</td>
+                                <td>{{ reclamation.IDArticle }}</td>
+                                <td>{{ reclamation.IDUtilisateur }}</td>
+                                <td>
+                                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}" class="btn btn-sm btn-primary">Show</a>
+                                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="9" class="text-center">No records found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <a href="{{ path('app_reclamation_new') }}" class="btn btn-success">
+                    <i class="tim-icons icon-simple-add"></i> Create New Reclamation
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

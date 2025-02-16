@@ -1,0 +1,49 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}Reponses Index{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Reponses Index</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="text-primary">
+                        <tr>
+                            <th>ID</th>
+                            <th>Date Rep</th>
+                            <th>Contenu Rep</th>
+                            <th>ID Admin</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reponse in reponses %}
+                            <tr>
+                                <td>{{ reponse.id }}</td>
+                                <td>{{ reponse.DateRep ? reponse.DateRep|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ reponse.ContenuRep }}</td>
+                                <td>{{ reponse.IDAdmin }}</td>
+                                <td>
+                                    <a href="{{ path('app_reponses_show', {'id': reponse.id}) }}" class="btn btn-sm btn-primary">Show</a>
+                                    <a href="{{ path('app_reponses_edit', {'id': reponse.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">No records found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <a href="{{ path('app_reponses_new') }}" class="btn btn-success">
+                    <i class="tim-icons icon-simple-add"></i> Create New Response
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
